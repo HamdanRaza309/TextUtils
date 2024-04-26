@@ -40,7 +40,22 @@ export default function TextForm(props) {
     setText(upper);
   };
 
-  const [text, setText] = useState("Enter Here");
+  const handleCopyText = () => {
+    let text = document.getElementById("myBox");
+    text.select();
+    navigator.clipboard.writeText(text.value);
+  };
+
+  const handleExtraSpaces = () => {
+    let newText = text.split(/[ ]+/);
+    setText(newText.join(" "));
+  };
+
+  const handleClear = () => {
+    setText("");
+  };
+
+  const [text, setText] = useState("");
   //   text = "new text"; // wrong way to update text
   //   setText("new text"); // right way to update text
 
@@ -55,25 +70,37 @@ export default function TextForm(props) {
           id="myBox"
           rows="7"
         ></textarea>
-        <button className="btn btn-primary mx-2" onClick={handleOnClick}>
-          Convert to Uppercase
+        <button className="btn btn-primary mx-2 my-2" onClick={handleOnClick}>
+          Uppercase
         </button>
         <button
-          className="btn btn-primary mx-2"
+          className="btn btn-primary mx-2 my-2"
           onClick={handleFirstLetterUppercase}
         >
-          Convert First character to Uppercase
+          First character to Uppercase
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleLowClick}>
-          Convert to Lowercase
+        <button className="btn btn-primary mx-2 my-2" onClick={handleLowClick}>
+          Lowercase
         </button>
         <button
           type="submit"
           onClick={handleSpeakClick}
-          className="btn btn-primary mx-2"
+          className="btn btn-primary mx-2 my-2"
           id="toggle"
         >
           Speak
+        </button>
+        <button className="btn btn-primary mx-2 my-2" onClick={handleCopyText}>
+          Copy
+        </button>
+        <button
+          className="btn btn-primary mx-2 my-2"
+          onClick={handleExtraSpaces}
+        >
+          Remove Extra Spaces
+        </button>
+        <button className="btn btn-primary mx-2 my-2" onClick={handleClear}>
+          Clear
         </button>
       </div>
 
@@ -82,7 +109,10 @@ export default function TextForm(props) {
         <p>
           {text.split(" ").length} words and {text.length} characters
         </p>
-        <p>You can read it in {0.008 * text.split(" ").length} minutes</p>
+        <p>
+          You can read it in {0.008 * text.split(" ").length} minutes or{" "}
+          {0.48 * text.split(" ").length} seconds
+        </p>
         <h2>Preview</h2>
         <p>{text}</p>
       </div>

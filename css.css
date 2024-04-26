@@ -1,0 +1,5 @@
+const handle=()=>{
+    let m = getElementById('myBox');
+    m.select();
+    navigator.clipboard.writeText(m.value);
+}
